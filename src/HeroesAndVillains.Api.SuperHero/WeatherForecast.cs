@@ -1,4 +1,4 @@
-namespace SuperHeroApi
+namespace HeroesAndVillains.Api.SuperHero
 {
     public class WeatherForecast
     {

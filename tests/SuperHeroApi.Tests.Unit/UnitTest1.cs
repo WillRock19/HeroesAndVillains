@@ -1,4 +1,4 @@
-namespace SuperHeroApi.Tests.Unit
+namespace HeroesAndVillains.Api.SuperHero.Tests.Unit
 {
     public class UnitTest1
     {

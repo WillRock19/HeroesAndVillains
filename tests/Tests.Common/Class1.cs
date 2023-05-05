@@ -1,4 +1,4 @@
-﻿namespace Tests.Common
+﻿namespace HeroesAndVillains.Tests.Common
 {
     public class Class1
     {
