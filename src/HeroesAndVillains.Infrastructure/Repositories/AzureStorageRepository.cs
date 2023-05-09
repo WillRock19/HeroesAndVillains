@@ -1,5 +1,5 @@
 ﻿using Azure.Data.Tables;
-using HeroesAndVillains.Infrastructure.Interfaces;
+using HeroesAndVillains.Domain.Interfaces.Repositories;
 
 namespace HeroesAndVillains.Infrastructure.Repositories
 {
@@ -12,12 +12,13 @@ namespace HeroesAndVillains.Infrastructure.Repositories
         {
             _tableName = tableName;
             _tableClient = new TableClient(nameOrConnectionString, tableName);
+
+            CreateTableIfNotExist();
         }
 
-        public async Task<IAzureStorageRepository> CreateTableIfNotExist() 
+        public void CreateTableIfNotExist() 
         {
-            await _tableClient.CreateIfNotExistsAsync();
-            return this;
+            _tableClient.CreateIfNotExists();
         }
     }
 }

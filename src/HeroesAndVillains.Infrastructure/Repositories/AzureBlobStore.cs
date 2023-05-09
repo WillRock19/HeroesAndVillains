@@ -1,8 +1,9 @@
 ﻿using Azure.Storage.Blobs;
+using HeroesAndVillains.Domain.Interfaces.Repositories;
 
 namespace HeroesAndVillains.Infrastructure.Repositories
 {
-    public class AzureBlobStore
+    public class AzureBlobStore : IAzureBlobStorage
     {
         private BlobServiceClient _blobServiceClient;
         private BlobContainerClient _blobContainerClient;
@@ -11,12 +12,8 @@ namespace HeroesAndVillains.Infrastructure.Repositories
         {
             _blobServiceClient = new BlobServiceClient(nameOrConnectionString);
             _blobContainerClient = _blobServiceClient.GetBlobContainerClient(containerName);
-        }
 
-        public async Task<AzureBlobStore> CreateContainerIfNotExist()
-        {
-            await _blobContainerClient.CreateIfNotExistsAsync();
-            return this;
+            CreateContainerIfNotExist();
         }
 
         public async Task SaveImageInBlobAsync(Guid recordId, string imageName, byte[] imageContent) 
@@ -45,5 +42,10 @@ namespace HeroesAndVillains.Infrastructure.Repositories
         }
 
         private string PathToImage(Guid recordId, string fileName) => $"{recordId}/{fileName}";
+
+        private void CreateContainerIfNotExist()
+        {
+            _blobContainerClient.CreateIfNotExists();
+        }
     }
 }

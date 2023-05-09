@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\HeroesAndVillains.Api.SuperHero\HeroesAndVillains.Api.SuperHero.csproj" />
-    <ProjectReference Include="..\..\src\SuperHeroApi\HeroesAndVillains.Api.SuperHero.csproj" />
   </ItemGroup>
 
 </Project>

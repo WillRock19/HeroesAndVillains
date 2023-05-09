@@ -13,10 +13,13 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        var app = builder.Build();
+        var connectionStrings = builder.Configuration
+                                       .GetSection("ConnectionStrings")
+                                       .Get<ConnectionStrings>();
 
-        var a = app.Environment;
-        var settings = builder.Configuration.GetSection("ConnectionStrings").Get<ConnectionStrings>();
+        builder.Services.AddDepedencies(connectionStrings);
+
+        var app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -29,9 +32,10 @@ public class Program
 
         app.UseAuthorization();
 
-
         app.MapControllers();
 
         app.Run();
     }
 }
+
+
