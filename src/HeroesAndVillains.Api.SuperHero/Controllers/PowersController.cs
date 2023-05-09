@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace SuperHeroApi.Controllers
+namespace HeroesAndVillains.Api.SuperHero.Controllers
 {
     [ApiController]
     [Route("[controller]")]
