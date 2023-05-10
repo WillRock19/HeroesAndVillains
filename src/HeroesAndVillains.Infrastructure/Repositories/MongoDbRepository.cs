@@ -14,14 +14,14 @@ namespace HeroesAndVillains.Infrastructure.Repositories
             Collection = database.GetCollection<T>(collectionName);
         }
 
-        public async Task<T> Get(ObjectId id) 
+        public async Task<T> GetById(ObjectId id) 
         {
             var filterById = Builders<T>.Filter.Eq("_id", id);
             var result = await Collection.FindAsync(filterById);
             return await result.FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll(ObjectId id)
+        public async Task<IEnumerable<T>> GetAll()
         {
             var result = await Collection.FindAsync(new BsonDocument());
             return await result.ToListAsync();
