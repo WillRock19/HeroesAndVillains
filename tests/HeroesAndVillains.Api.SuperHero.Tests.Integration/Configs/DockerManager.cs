@@ -5,8 +5,8 @@ namespace HeroesAndVillains.Api.SuperHero.Tests.Integration.Configs
 {
     internal class DockerManager : IDisposable
     {
-        private const string _stateRunning = "running";
-        private DockerClient _dockerClient;
+        private const string _runningState = "running";
+        private readonly DockerClient _dockerClient;
 
         public DockerManager() 
         {
@@ -19,7 +19,7 @@ namespace HeroesAndVillains.Api.SuperHero.Tests.Integration.Configs
                 new ContainersListParameters { All = true }
             );
 
-            return containerNames.All(name => containers.Any(x => x.Names.First().Contains(name) && x.State == _stateRunning));
+            return containerNames.All(name => containers.Any(x => x.Names.First().Contains(name) && x.State == _runningState));
         }
 
         public void Dispose() 

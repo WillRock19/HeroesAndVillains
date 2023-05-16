@@ -10,15 +10,15 @@ namespace HeroesAndVillains.Api.SuperHero.Tests.Integration.Specs.Repositories
     {
         private const string _databaseName = "testsDatabase";
         private const string _collectionName = "entitiesCollection";
-        private RepoForTests _repoForTests;
+        private readonly RepoForTests _repoForTests;
 
         public MongoDbRepositoryTests(GlobalContext globalContext) 
         {
-            _repoForTests = new RepoForTests(globalContext.MongoDbTestConnectionString, _databaseName, _collectionName);
+            _repoForTests = new RepoForTests(globalContext.MongoDbConnectionString, _databaseName, _collectionName);
         }
 
         [Fact]
-        public async Task Save_ShouldAddEntityToDatabase()
+        public async Task Save_ShouldUpdateIdAndAddEntityToDatabase()
         {
             var entity = new EntityForTests() { Name = "Entity to save" };
             await _repoForTests.Save(entity);
