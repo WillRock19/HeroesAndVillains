@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Builders\Models\" />
     <Folder Include="Resources\Images\" />
   </ItemGroup>
 
