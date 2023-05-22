@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -29,12 +29,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\HeroesAndVillains.Infrastructure\HeroesAndVillains.Infrastructure.csproj" />
     <ProjectReference Include="..\HeroesAndVillains.Api.SuperHero.Tests.Common\HeroesAndVillains.Tests.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="docker-compose.yml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
