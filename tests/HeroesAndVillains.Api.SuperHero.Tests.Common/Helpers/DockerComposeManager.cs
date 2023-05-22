@@ -4,15 +4,14 @@ using System.Diagnostics;
 
 namespace HeroesAndVillains.Tests.Common.Helpers
 {
-    public class DockerManager : IDisposable
+    public class DockerComposeManager : IDisposable
     {
         private const string _runningState = "running";
         private readonly DockerClient _dockerClient;
         private readonly List<string> _containerNames;
         private readonly string _dockerComposeFilePath;
 
-
-        public DockerManager(List<string> containerNames, string dockerComposePath) 
+        public DockerComposeManager(List<string> containerNames, string dockerComposePath) 
         {
             _dockerClient = new DockerClientConfiguration().CreateClient();
             _containerNames = containerNames;
@@ -70,7 +69,7 @@ namespace HeroesAndVillains.Tests.Common.Helpers
             await process.WaitForExitAsync();
 
             if (process.ExitCode != 0)
-                throw new Exception("Could not run 'docker-compose' on test's setup. Please, run the command on your test's directory and check what might be happening.");
+                throw new Exception("Could not run 'docker-compose' during test's setup. Please, run the command on your test's directory and check what might have happened.");
         }
     }
 }
