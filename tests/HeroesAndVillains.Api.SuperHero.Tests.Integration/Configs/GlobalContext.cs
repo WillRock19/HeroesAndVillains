@@ -5,9 +5,9 @@ namespace HeroesAndVillains.Api.SuperHero.Tests.Integration.Configs
 {
     public class GlobalContext : IAsyncLifetime
     {
-        public string MongoDbConnectionString { get; private set; }    
+        public string MongoDbConnectionString { get; private set; }
         public string AzuriteConnectionString { get; private set; }
-        
+
         private readonly MongoDbContainer _mongoDb;
         private readonly AzuriteContainer _azurite;
 
@@ -34,13 +34,13 @@ namespace HeroesAndVillains.Api.SuperHero.Tests.Integration.Configs
 
         async Task IAsyncLifetime.DisposeAsync()
         {
-            if (_mongoDb != null) 
+            if (_mongoDb != null)
             {
                 await _mongoDb.StopAsync();
                 await _mongoDb.DisposeAsync();
             }
 
-            if (_azurite != null) 
+            if (_azurite != null)
             {
                 await _azurite.StopAsync();
                 await _azurite.DisposeAsync();
