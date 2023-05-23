@@ -1,44 +1,49 @@
-﻿using HeroesAndVillains.Tests.Common.Helpers;
+﻿using Testcontainers.Azurite;
+using Testcontainers.MongoDb;
 
 namespace HeroesAndVillains.Api.SuperHero.Tests.Integration.Configs
 {
     public class GlobalContext : IAsyncLifetime
     {
-        public string MongoDbConnectionString => "mongodb://localhost:27017";    
-        public string AzuriteConnectionString => "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
-        
-        private DockerComposeManager _dockerManager;
+        public string MongoDbConnectionString { get; private set; }
+        public string AzuriteConnectionString { get; private set; }
+
+        private readonly MongoDbContainer _mongoDb;
+        private readonly AzuriteContainer _azurite;
+
 
         public GlobalContext()
         {
-            var containerNames = new List<string>()
-            {
-                "mongo-db-for-tests",
-                "azurite-for-tests"
-            };
-            var dockerComposePath = Path.Combine(Directory.GetCurrentDirectory(), "docker-compose.yml");
+            _mongoDb = new MongoDbBuilder()
+                .WithImage("mongo:latest")
+                .Build();
 
-            _dockerManager = new DockerComposeManager(containerNames, dockerComposePath);
+            _azurite = new AzuriteBuilder()
+                .WithImage("mcr.microsoft.com/azure-storage/azurite")
+                .Build();
         }
 
         public async Task InitializeAsync()
         {
-            await EnsureContainersAreUp();
+            await _mongoDb.StartAsync();
+            await _azurite.StartAsync();
+
+            MongoDbConnectionString = _mongoDb.GetConnectionString();
+            AzuriteConnectionString = _azurite.GetConnectionString();
         }
 
         async Task IAsyncLifetime.DisposeAsync()
         {
-            await _dockerManager.StopAndRemoveContainers();
-            _dockerManager.Dispose();
-        }
-
-        private async Task EnsureContainersAreUp() 
-        {
-            var allRunning = await _dockerManager.GuaranteeContainersAreUp();
-
-            if (!allRunning)
+            if (_mongoDb != null)
             {
-                throw new ApplicationException("Not all obligatory containers are running; tests cannot be executed!");
+                await _mongoDb.StopAsync();
+                await _mongoDb.DisposeAsync();
+            }
+
+            if (_azurite != null)
+            {
+                await _azurite.StopAsync();
+                await _azurite.DisposeAsync();
             }
         }
     }
