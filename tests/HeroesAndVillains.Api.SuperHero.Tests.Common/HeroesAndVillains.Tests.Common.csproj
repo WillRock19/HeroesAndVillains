@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\HeroesAndVillains.Api.SuperHero\HeroesAndVillains.Api.SuperHero.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Resources\Images\invincible.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

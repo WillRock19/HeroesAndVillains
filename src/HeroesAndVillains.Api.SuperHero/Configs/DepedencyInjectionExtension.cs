@@ -7,10 +7,11 @@ namespace HeroesAndVillains.Api.SuperHero.Configs
     {
         internal static void AddDepedencies(this IServiceCollection serviceCollection, ConnectionStrings connectionStrings) 
         {
-            serviceCollection.AddScoped<IAzureBlobStorage>(provider =>
-            {
-                return new AzureBlobStore(connectionStrings.AzureStorage, "Images");
-            });
+            serviceCollection
+                .AddScoped<IAzureBlobStorage>(provider =>
+                {
+                    return new AzureBlobStore(connectionStrings.AzureStorage, "Images");
+                });
         }
     }
 }
